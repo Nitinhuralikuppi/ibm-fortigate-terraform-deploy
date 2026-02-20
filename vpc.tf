@@ -9,6 +9,10 @@ data "ibm_is_subnet" "subnet2" {
   identifier = var.subnet2
 }
 
+data "ibm_is_subnet" "subnet3" {
+  identifier = var.subnet3
+}
+
 data "ibm_is_security_group" "fgt_security_group" {
   name = var.security_group
 }
@@ -29,5 +33,14 @@ resource "ibm_is_virtual_network_interface" "vni-port2" {
   auto_delete               = false
   enable_infrastructure_nat = true
   subnet                    = data.ibm_is_subnet.subnet2.id
+
+}
+
+resource "ibm_is_virtual_network_interface" "vni-port3" {
+  name                      = "${var.cluster_name}-fgt-interface3-${random_string.random_suffix.result}"
+  allow_ip_spoofing         = false
+  auto_delete               = false
+  enable_infrastructure_nat = true
+  subnet                    = data.ibm_is_subnet.subnet3.id
 
 }
